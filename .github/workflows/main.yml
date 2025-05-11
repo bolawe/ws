@@ -18,10 +18,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          mkdir -p data  # Create data directory
-          echo "${{ secrets.GSHEETS_CREDS }}" > gsheets_creds.json
+          mkdir -p data
           
       - name: Run Wyckoff Scanner
+        env:
+          GSHEETS_CREDS: ${{ secrets.GSHEETS_CREDS }}
         run: |
           python scripts/main.py
           python scripts/gsheets.py
