@@ -16,12 +16,12 @@ jobs:
           python-version: "3.10"
       
       - name: Install dependencies
-        run: pip install -r requirements.txt
-        
-      - name: Run Wyckoff Scanner
-        env:
-          GSHEETS_CREDS: ${{ secrets.GSHEETS_CREDS }}
         run: |
-          echo "$GSHEETS_CREDS" > gsheets_creds.json
+          pip install -r requirements.txt
+          mkdir -p data  # Create data directory
+          echo "${{ secrets.GSHEETS_CREDS }}" > gsheets_creds.json
+          
+      - name: Run Wyckoff Scanner
+        run: |
           python scripts/main.py
           python scripts/gsheets.py
